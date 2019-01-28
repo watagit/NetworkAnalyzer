@@ -154,7 +154,7 @@ public static void main(String[] args) throws InterruptedException {
 		//セルがダブルクリックされたか
 		table.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent me) {
-				if(me.getClickCount() == 2) {
+				if(me.getClickCount() == 1) {
 					Point pt = me.getPoint();
 					int idx = table.rowAtPoint(pt);
 					if(idx >= 0) {
