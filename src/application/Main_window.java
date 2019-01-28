@@ -71,8 +71,8 @@ public static void main(String[] args) throws InterruptedException {
 		frame.setResizable(false);
 		frame.setJMenuBar(Bar);
 		Create.analyze();
-		for(;;) {
-			Data_Initialize("1", "1", "1", "1", "1", "1", "1");
+		for(int k = 0; k < 30; k ++) {
+			Data_Initialize(Integer.toString(k + 1), "1", "1", "1", "1", "1", "1");
 			Thread.sleep(30);
 		}
 	}
@@ -138,7 +138,7 @@ public static void main(String[] args) throws InterruptedException {
 		//テーブル定義
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		table.setAutoCreateRowSorter(true);
-		table.setEnabled(false);
+		table.setEnabled(true);
 		TableColumn[] column=new TableColumn[7];
 		//カラムの幅を設定
 		DefaultTableColumnModel columnModel =(DefaultTableColumnModel)table.getColumnModel();
@@ -155,6 +155,11 @@ public static void main(String[] args) throws InterruptedException {
 		table.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent me) {
 				if(me.getClickCount() == 1) {
+//					System.out.println("hello");
+//					System.out.println(table.getRowHeight());
+					System.out.println(table.getSelectedRow() + 1);
+//					System.out.println(table.getSelectedColumnCount());
+//					System.out.println(table.getSelectionBackground());
 					Point pt = me.getPoint();
 					int idx = table.rowAtPoint(pt);
 					if(idx >= 0) {
