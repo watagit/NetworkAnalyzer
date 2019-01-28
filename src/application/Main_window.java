@@ -60,6 +60,9 @@ public class Main_window extends JFrame{
 		//public static String p=String.valueOf(id);
 		//static String Testfrom="192.186.225.0";
 		public static int flg=0;
+		
+		int RowCount;	//選択された行数（1行目の時は1）
+		int ColumnCount;	//選択された列数（1列目の時は0）
 
 public static void main(String[] args) throws InterruptedException {
 
@@ -72,7 +75,7 @@ public static void main(String[] args) throws InterruptedException {
 		frame.setJMenuBar(Bar);
 		Create.analyze();
 		for(int k = 0; k < 30; k ++) {
-			Data_Initialize(Integer.toString(k + 1), "1", "1", "1", "1", "1", "1");
+			Data_Initialize(Integer.toString(k + 1), Integer.toString(k + 5), Integer.toString(k + 10), Integer.toString(k + 15), Integer.toString(k + 20), Integer.toString(k + 25), Integer.toString(k + 30));
 			Thread.sleep(30);
 		}
 	}
@@ -138,7 +141,7 @@ public static void main(String[] args) throws InterruptedException {
 		//テーブル定義
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		table.setAutoCreateRowSorter(true);
-		table.setEnabled(true);
+		table.setEnabled(true);	//trueにしないとgetRowCount()がうまく使えない？
 		TableColumn[] column=new TableColumn[7];
 		//カラムの幅を設定
 		DefaultTableColumnModel columnModel =(DefaultTableColumnModel)table.getColumnModel();
@@ -155,23 +158,32 @@ public static void main(String[] args) throws InterruptedException {
 		table.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent me) {
 				if(me.getClickCount() == 1) {
-//					System.out.println("hello");
-//					System.out.println(table.getRowHeight());
-					System.out.println(table.getSelectedRow() + 1);
-//					System.out.println(table.getSelectedColumnCount());
-//					System.out.println(table.getSelectionBackground());
+					RowCount = table.getSelectedRow();
+					int PopupRowCount = RowCount + 1;	//ポップアップ用の行数
+					ColumnCount = table.getSelectedColumn();
+					int PopupColumnCount = ColumnCount + 1;	//ポップアップ用の列数
+					System.out.println(RowCount);	//選択したカラムの行数
+					System.out.println(ColumnCount);
+					for(int h = 0; h < 7; h ++) {
+						System.out.print(table.getValueAt(RowCount, h) + " ");
+					}
+//					System.out.println(table.getValueAt(RowCount, ColumnCount));
 					Point pt = me.getPoint();
 					int idx = table.rowAtPoint(pt);
 					if(idx >= 0) {
-						int row = table.convertRowIndexToModel(idx);
-						String str = String.format(
-						          "%s (%s)", model.getValueAt(row, 0),model.getValueAt(row, 1),
-						          model.getValueAt(row, 2),model.getValueAt(row, 3),
-						          model.getValueAt(row, 4),model.getValueAt(row, 5),model.getValueAt(row, 6));
+//						int row = table.convertRowIndexToModel(idx);
+//						String str = String.format(
+//						          "%s (%s)", model.getValueAt(row, 0),model.getValueAt(row, 1),
+//						          model.getValueAt(row, 2),model.getValueAt(row, 3),
+//						          model.getValueAt(row, 4),model.getValueAt(row, 5),model.getValueAt(row, 6));
 						PacketFlow flow = new PacketFlow();
 						flow.Paint_flow();
+						//ポップアップメッセージ
 						JOptionPane.showMessageDialog(
-						          table, str, "title", JOptionPane.INFORMATION_MESSAGE
+						          table, PopupRowCount + "行目が選択されました", "title", JOptionPane.INFORMATION_MESSAGE
+						);
+						JOptionPane.showMessageDialog(
+						          table, PopupColumnCount + "列目が選択されました", "title", JOptionPane.INFORMATION_MESSAGE
 						);
 					}
 				}
