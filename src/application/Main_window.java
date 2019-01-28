@@ -154,7 +154,7 @@ public static void main(String[] args) throws InterruptedException {
 			}else
 				column[i].setPreferredWidth(300);
 		}
-		//セルがダブルクリックされたか
+		//セルがクリックされたか
 		table.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent me) {
 				if(me.getClickCount() == 1) {
@@ -176,8 +176,16 @@ public static void main(String[] args) throws InterruptedException {
 //						          "%s (%s)", model.getValueAt(row, 0),model.getValueAt(row, 1),
 //						          model.getValueAt(row, 2),model.getValueAt(row, 3),
 //						          model.getValueAt(row, 4),model.getValueAt(row, 5),model.getValueAt(row, 6));
-						PacketFlow flow = new PacketFlow();
-						flow.Paint_flow();
+						new PacketFlow(
+								table.getValueAt(RowCount, 0),
+								table.getValueAt(RowCount, 1),
+								table.getValueAt(RowCount, 2),
+								table.getValueAt(RowCount, 3),
+								table.getValueAt(RowCount, 4),
+								table.getValueAt(RowCount, 5), 
+								table.getValueAt(RowCount, 6)
+						);
+//						flow.PacketFlow("hello");
 						//ポップアップメッセージ
 						JOptionPane.showMessageDialog(
 						          table, PopupRowCount + "行目が選択されました", "title", JOptionPane.INFORMATION_MESSAGE
